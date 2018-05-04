@@ -1,0 +1,163 @@
+<html>
+
+<head>
+    <title>API调试</title>
+    <link rel="stylesheet" href="./../bootstrap.min.css">
+    <script src="./../js/jquery.min.js"></script>
+    <script src="./../js/bootstrap.min.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">Blog</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="/article">文章管理</a>
+                    </li>
+                    <li>
+                        <a href="/image">图片管理</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="userInfor">
+                           <a href="">  </a>       
+                        </li>
+                    <li id="login">
+                            <a href="/login">登录</a>                    
+                        </li>
+                    <li id="logout">
+                        <a >退出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+
+        <div id="API" class="list-group">
+
+            <button type="button" class="btn btn-primary">查看文章列表</button>
+            <button type="button" class="btn btn-primary">添加文章</button>
+            <!-- <button type="button" class="btn btn-primary">修改文章</button>
+                  <button type="button" class="btn btn-primary">删除文章</button> -->
+        </div>
+
+        <div>
+            <div class="tab">
+                <legend>文章列表</legend>
+                <button id="all" type="button" class="btn btn-primary">全部</button>
+                <button id="html" type="button" class="btn btn-primary">HTML</button>
+                <button id="css" type="button" class="btn btn-primary">CSS</button>
+                <button id="js" type="button" class="btn btn-primary">JS</button>
+                <button id="essay" type="button" class="btn btn-primary">随笔</button>
+                <div style="padding-bottom:20px;"></div>
+                <ul id="listArticle" class="list-group"></ul>
+
+            </div>
+
+            <div class="tab" style="display:none">
+                <form role="form">
+                    <legend>添加文章</legend>
+                    <div class="form-group">
+
+                        <label for="">文章类型</label>
+                        <select name="articleType" id="articleType" class="form-control" required="required">
+                            <option value="HTML">HTML</option>
+                            <option value="CSS">CSS</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="essay">随笔</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">标题</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="">内容</label>
+                        <textarea id="content" name="content" class="form-control" rows="3" required="required" placeholder="内容"></textarea>
+
+                    </div>
+                    <button id="add" type="submit" class="btn btn-primary">点击提交</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">查看文章</button> -->
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="editModalLabel">编辑文章</h4>
+                    </div>
+                    <div class="editmodal-body" style="padding:40px;">
+
+
+
+
+
+                        <div class="form-group">
+                            <label for="">标题</label>
+                            <input type="text" class="form-control" id="titleEdit" name="title" placeholder="标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="">内容</label>
+                            <textarea id="contentEdit" name="content" class="form-control" rows="3" required="required" placeholder="内容"></textarea>
+
+                        </div>
+                        <button id="edit" type="submit" class="btn btn-primary">点击提交</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- <div class="list-group">
+                                    <h1>API调试</h1>
+                                    <button type="button" class="btn btn-primary">添加文章</button>
+                                    <button type="button" class="btn btn-primary">查看文章</button>
+                                    <button type="button" class="btn btn-primary">修改文章</button>
+                                    <button type="button" class="btn btn-primary">删除文章</button>
+                        </div> -->
+    </div>
+
+    <script src="./../js/index.js"></script>
+
+</body>
+
+</html>

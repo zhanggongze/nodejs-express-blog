@@ -1,0 +1,192 @@
+<html>
+
+<head>
+    <title>相册管理API</title>
+    <link rel="stylesheet" href="./../bootstrap.min.css">
+    <script src="./../js/jquery.min.js"></script>
+    <script src="./../js/bootstrap.min.js"></script>
+    <style>
+        #listArticle li {
+            width: 200px;
+            height: 100px;
+            overflow: hidden;
+            float: left;
+            list-style: none;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0px 5px 14px 1px #bbb;
+        }
+
+        #listArticle li img {
+            width: 100%;
+        }
+
+        #userfile {
+            display: none;
+        }
+
+        #upimg {
+            border: 2px dashed #eee;
+            width: 100%;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            color: #ccc;
+            font-size: 28px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Blog</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/article">文章管理</a>
+                    </li>
+                    <li class="active">
+                        <a href="/image">图片管理</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                        <li id="userInfor">
+                               <a href="">  </a>       
+                            </li>
+                        <li id="login">
+                                <a href="/login">登录</a>                    
+                            </li>
+                        <li id="logout">
+                            <a >退出</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="API" class="list-group">
+            <button type="button" class="btn btn-primary">相册列表</button>
+            <button type="button" class="btn btn-primary">添加照片</button>
+            <!-- <button type="button" class="btn btn-primary">修改文章</button>
+                  <button type="button" class="btn btn-primary">删除文章</button> -->
+        </div>
+
+        <div>
+            <div class="tab">
+                <legend>相册列表</legend>
+                <button type="button" data-type='all' class="imgType btn btn-primary">全部</button>
+                <button type="button" data-type='fj' class="imgType btn btn-primary">风景</button>
+                <button type="button" data-type='cs' class="imgType btn btn-primary">城市</button>
+                <button type="button" data-type='ms' class="imgType btn btn-primary">美食</button>
+                <button type="button" data-type='yx' class="imgType btn btn-primary">游戏</button>
+                <button type="button" data-type='dy' class="imgType btn btn-primary">电影</button>
+                <div style="padding-bottom:20px;"></div>
+                <ul id="listArticle" class="list-group"></ul>
+
+            </div>
+
+            <div class="tab" style="display:none">
+                <form id="testform" method="post" enctype="multipart/form-data">
+                    <legend>添加照片</legend>
+                    <div class="form-group">
+
+                        <label for="">照片类型</label>
+                        <select name="articleType" id="articleType" class="form-control" required="required">
+                            <option value="fj">风景</option>
+                            <option value="cs">城市</option>
+                            <option value="ms">美食</option>
+                            <option value="yx">游戏</option>
+                            <option value="dy">电影</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input name="key" id="key" type="hidden" value="">
+                        <input id="token" name="token" type="hidden" value="">
+                        <input id="userfile" name="file" type="file" />
+
+                        <!-- take photo with phone -->
+                        <!-- <input id="userfile" name="file" accept="image/*" type="file" /> -->
+
+                        <!-- take video with phone -->
+                        <!-- <input id="userfile" name="file" type="file" accept="video/*"/> -->
+
+                    </div>
+
+                    <label id="upimg" for="userfile">点击上传图片</label>
+
+                </form>
+                <div class="selected-file"></div>
+                <div class="upprogress"></div>
+                <div class="uploaded-result"></div>
+            </div>
+        </div>
+
+        <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">查看文章</button> -->
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title11</h4>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade bs-example-modal-lg" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="editModalLabel">图片预览</h4>
+                    </div>
+                    <div class="editmodal-body " style="padding:40px;">
+
+
+                        <img width="100%" id="modalImg" src="" alt="">
+                        <p></p>
+                        <button id="deletimg" data-id='' type="button" class="btn btn-large btn-block btn-default ">删除</button>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- <div class="list-group">
+                                    <h1>API调试</h1>
+                                    <button type="button" class="btn btn-primary">添加文章</button>
+                                    <button type="button" class="btn btn-primary">查看文章</button>
+                                    <button type="button" class="btn btn-primary">修改文章</button>
+                                    <button type="button" class="btn btn-primary">删除文章</button>
+                        </div> -->
+    </div>
+
+    <script src="./../js/image.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<html>
+
+<meta charset="utf-8">
+
+<head>
+    <title>login</title>
+    <link rel="stylesheet" href="./../bootstrap.min.css">
+    <script src="./../js/jquery.min.js"></script>
+    <script src="./../js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1></h1>
+        <form role="form">
+            <legend>用户登录</legend>
+
+            <div class="form-group">
+                <label for="">用户名</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="用户名">
+            </div>
+            <div class="form-group">
+                <label for="">密码</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+            </div>
+
+            <button id="submit" type="submit" class="btn btn-primary">登录</button>
+            <a href="/register" class="btn btn-primary">注册</a>
+        </form>
+    </div>
+    <script>
+
+        $(function () {
+
+
+            $("#submit").click(function (e) {
+                e.preventDefault();
+
+                login();
+
+                return false;
+
+            });
+
+            function login() {
+                $.ajax({
+                    type: 'post',
+                    url: './api/login/auth',
+                    data:JSON.stringify({
+                        "name":$("#name").val(),
+                        "password":$("#password").val()
+                    }),
+                    headers:{ "Content-Type": "application/json; charset=utf-8" },
+                    success: function (res) {
+                        console.log(res);
+
+                        sessionStorage.setItem("token",res.token);
+                        sessionStorage.setItem("userName",$("#name").val());
+
+                        window.location.href="/article";
+                    },
+                    error:function(e){
+                        var errormsg = e.responseJSON.ret_msg;
+                        alert(errormsg);
+                    }
+                })
+            }
+
+
+
+
+            
+
+
+        });
+
+    </script>
+
+</body>
+
+</html>
